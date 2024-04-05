@@ -6,12 +6,19 @@ const ImageModal = ({ modalIsOpen, closeModal, image }) => {
       onRequestClose={closeModal}
       contentLabel="Image Modal"
       style={{
-        content: {
+        overlay: {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          width: "100vw",
-          height: "100vh",
+          background: "rgba(0, 0, 0, 0.8)",
+        },
+        content: {
+          position: "relative",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "70vw",
+          height: "70vh",
           border: "none",
           inset: "0px",
           padding: "0px",
@@ -23,8 +30,8 @@ const ImageModal = ({ modalIsOpen, closeModal, image }) => {
         src={image.urls.full}
         alt={image.description}
         style={{
-          maxHeight: "100vh",
-          maxWidth: "100vw",
+          maxHeight: "100%",
+          maxWidth: "100%",
         }}
       />
       <button onClick={closeModal}>Close</button>

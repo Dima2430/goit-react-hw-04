@@ -1,5 +1,5 @@
 import ImageCard from "../ImageCard/ImageCard";
-const ImageGallery = ({ images }) => {
+const ImageGallery = ({ images, modalIsOpen, openModal, closeModal }) => {
   return (
     <ul
       style={{
@@ -12,7 +12,12 @@ const ImageGallery = ({ images }) => {
     >
       {images.map((image) => (
         <li key={image.id}>
-          <ImageCard image={image} />
+          <ImageCard
+            image={image}
+            modalIsOpen={modalIsOpen}
+            openModal={openModal}
+            closeModal={closeModal}
+          />
         </li>
       ))}
     </ul>

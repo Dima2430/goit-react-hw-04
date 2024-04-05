@@ -6,15 +6,28 @@ import LoadingLSpinner from "./Loader/Loader";
 import ErrorMessage from "./ErrorMessage/ErrorMessage";
 import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn";
 import toast from "react-hot-toast";
-
+import ImageModal from "./ImageModal/ImageModal";
+import Modal from "react-modal";
 const App = () => {
   const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const openModal = (image) => {
+    setSelectedImage(image);
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
 
   useEffect(() => {
+    Modal.setAppElement("#root");
     if (!query) return;
 
     const fetchImages = async () => {
@@ -58,7 +71,14 @@ const App = () => {
     <div>
       <SearchBar onSubmit={handleSearchSubmit} />
       {error && <ErrorMessage message={error} />}
-      {images.length > 0 && <ImageGallery images={images} />}
+      {images.length > 0 && (
+        <ImageGallery
+          images={images}
+          modalIsOpen={modalIsOpen}
+          openModal={openModal}
+          closeModal={closeModal}
+        />
+      )}
       {isLoading && (
         <LoadingLSpinner
           type="ThreeDots"
@@ -69,6 +89,13 @@ const App = () => {
       )}
       {images.length > 0 && !isLoading && (
         <LoadMoreBtn onClick={handleLoadMoreClick} />
+      )}
+      {modalIsOpen && selectedImage && (
+        <ImageModal
+          modalIsOpen={modalIsOpen}
+          closeModal={closeModal}
+          image={selectedImage}
+        />
       )}
     </div>
   );
